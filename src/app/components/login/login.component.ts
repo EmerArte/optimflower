@@ -3,6 +3,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingService } from 'src/app/services/loading.service';
 import { LoginService, NAME_LOCALSTORAGE } from 'src/app/services/login.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent {
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private loginService: LoginService,
+              private messageService: MessageService,
               private loadingService : LoadingService) {
     this.construirFormulario();
   }
@@ -36,7 +38,7 @@ export class LoginComponent {
         }
       },
       error: (error: any) => {
-        //Swal.fire('Oops!', error, 'warning');
+        this.showError()
       }
   });
     
@@ -44,5 +46,9 @@ export class LoginComponent {
   isLoading(){
     return this.loadingService.getLoading();
   }
+  showError() {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Credenciales inválidas' });
+}
+
 
 }

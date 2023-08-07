@@ -12,6 +12,11 @@ import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { MessagesModule } from 'primeng/messages';
+import { MessageService } from 'primeng/api';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { DashboardModule } from './components/dashboard/dashboard/dashboard.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,14 +27,18 @@ import { InputTextModule } from 'primeng/inputtext';
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    DashboardModule,
     AppRoutingModule,
     ButtonModule,
     PasswordModule,
     KeyFilterModule,
     InputTextModule,
-    CardModule
+    CardModule,
+    ToastModule,
+    MessagesModule,
+    ProgressSpinnerModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
