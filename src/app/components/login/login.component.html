@@ -1,0 +1,45 @@
+<div
+  class="grid m-0 p-0 min-h-screen align-items-center w-full"
+>
+  <!-- mensajes estaticos -->
+  <div class="hidden sm:block sm:col-6 md:col-7">
+    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus illo obcaecati tempore libero quis nostrum ab sint minima natus. Necessitatibus vero voluptatibus iusto? Dignissimos repellendus accusantium laboriosam iusto asperiores ipsa.
+  </div>
+  <!-- Formulario -->
+  <div class="sm:col-6 md:col-5 col-9">
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="flex flex-row w-full justify-content-center p-3">
+          <h1 class="text-xl text-blue-500">OPTIM</h1>
+          <h1 class="text-xl text-yellow-500">FLOWER</h1>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="content">
+        <div>
+          <p class="m-0 py-2 text-center">
+            Iniciar sesión
+          </p>
+          <form [formGroup]="formLogin">
+            <label for="username" class="font-bold block mb-2">Usuario</label>
+            <input
+              pInputText
+              id="integer"
+              [pKeyFilter]="blockSpace"
+              class="w-full"
+              formControlName="username"
+            />
+            <label for="password" class="font-bold block mb-2">Contraseña</label>
+            <p-password formControlName="password" styleClass="w-full" inputStyleClass="w-full" [toggleMask]="true" [feedback]="false"></p-password>
+          </form>
+        </div>
+      </ng-template>
+      
+
+      <ng-template pTemplate="footer">
+        <p-button label="Iniciar Sessión" styleClass="w-full" ></p-button>
+      </ng-template>
+    </p-card>
+  </div>
+    
+</div>
