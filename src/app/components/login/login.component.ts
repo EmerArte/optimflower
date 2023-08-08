@@ -29,15 +29,17 @@ export class LoginComponent {
   }
 
   openDashboard(pageName: string) {
+    this.loadingService.setLoading(true);
     this.loginService.authenticate(this.formLogin.controls.username.value, this.formLogin.controls.password.value).subscribe({
       next: (data: any) => {
         if (data.token) {
-          this.loadingService.setLoading(false);
           localStorage.setItem(NAME_LOCALSTORAGE, data.token);
           this.router.navigate([`${pageName}`]);
+          this.loadingService.setLoading(false);
         }
       },
       error: (error: any) => {
+        this.loadingService.setLoading(false);
         this.showError()
       }
   });
