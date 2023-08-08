@@ -1,5 +1,5 @@
 <div class="grid m-0 p-0 w-full justify-content-center align-content-center align-items-center">
-  <div class="w-11 md:col-9 m-0 p-0">
+  <div class="md:col-8 lg:col-7 w-11 md:w-10 lg:w-9 m-0 p-0">
     <div
       class="grid m-0 p-0 min-h-screen align-items-center justify-content-center w-full"
     >
@@ -14,7 +14,10 @@
       <div class="sm:col-6 md:col-5 lg:col-4 col-9">
         <p-card>
           <ng-template pTemplate="header">
-            <div class="flex flex-row w-full justify-content-center p-3">
+            <div class="w-full flex justify-content-center">
+              <img class="w-8rem h-8rem mt-2" src="assets/img/optimpowerlogo250.png" alt="logo">
+            </div>
+            <div class="flex flex-row w-full justify-content-center p-2">
               <h1 class="text-xl text-blue-500">OPTIM</h1>
               <h1 class="text-xl text-yellow-500">FLOWER</h1>
             </div>
@@ -22,7 +25,7 @@
 
           <ng-template pTemplate="content">
             <div>
-              <p class="m-0 py-2 text-center">Iniciar sesión</p>
+              
               <form [formGroup]="formLogin">
                 <label for="username" class="font-bold block mb-2"
                   >Usuario</label
