@@ -20,6 +20,7 @@ import { VariedadDashboardComponent } from './components/variedad-dashboard/vari
 import { ColorDashboardComponent } from './components/color-dashboard/color-dashboard.component';
 import { FiltrosComponent } from './components/filtros/filtros.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +37,7 @@ import { DropdownModule } from 'primeng/dropdown';
     AppLayoutModule,
     DropdownModule,
     AppRoutingModule,
+    TableModule,
     ButtonModule,
     PasswordModule,
     KeyFilterModule,
