@@ -1,0 +1,24 @@
+<p-card>
+  <div class="w-full">
+    <form [formGroup]="formFilters">
+      <div class="flex flex-wrap gap-3 p-fluid">
+        <div class="flex-auto">
+          <label for="semanaInicial">Semana Inicial</label>
+          <p-dropdown
+            formControlName="semanaInicial"
+            [options]="weeks"
+            optionLabel="display"
+          ></p-dropdown>
+        </div>
+        <div class="flex-auto">
+          <label for="semanaFinal">Semana Final</label>
+          <p-dropdown
+            formControlName="semanaFinal"
+            [options]="weeks"
+            optionLabel="display"
+          ></p-dropdown>
+        </div>
+      </div>
+    </form>
+  </div>
+</p-card>

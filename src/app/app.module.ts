@@ -18,12 +18,15 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AppLayoutModule } from './layout/app.layout.module';
 import { VariedadDashboardComponent } from './components/variedad-dashboard/variedad-dashboard.component';
 import { ColorDashboardComponent } from './components/color-dashboard/color-dashboard.component';
+import { FiltrosComponent } from './components/filtros/filtros.component';
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     VariedadDashboardComponent,
     ColorDashboardComponent,
+    FiltrosComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +34,7 @@ import { ColorDashboardComponent } from './components/color-dashboard/color-dash
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AppLayoutModule,
+    DropdownModule,
     AppRoutingModule,
     ButtonModule,
     PasswordModule,
