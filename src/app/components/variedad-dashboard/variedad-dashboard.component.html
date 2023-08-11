@@ -12,9 +12,9 @@
         <td *ngFor="let val of semanas.values">
           <div
             [ngClass]="{
-              'outofstock' : val >= 100,
-              'lowstock' : val >= 120,
-              'instock' : val > 100 && val < 120
+              'bg-red-500' : val <= 100,
+              'bg-yellow-500' : val >= 120,
+              '' : val > 100 && val < 120
             }"
           >
             {{ val }}
