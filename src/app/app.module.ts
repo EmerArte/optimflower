@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavigationBarComponent } from './components/layout/navigation-bar/navigation-bar.component';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,18 +15,22 @@ import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { DashboardModule } from './components/dashboard/dashboard/dashboard.module';
+import { AppLayoutModule } from './layout/app.layout.module';
+import { VariedadDashboardComponent } from './components/variedad-dashboard/variedad-dashboard.component';
+import { ColorDashboardComponent } from './components/color-dashboard/color-dashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationBarComponent,
-    LoginComponent
+    LoginComponent,
+    VariedadDashboardComponent,
+    ColorDashboardComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
-    DashboardModule,
+    AppLayoutModule,
     AppRoutingModule,
     ButtonModule,
     PasswordModule,

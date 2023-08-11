@@ -1,4 +1,6 @@
-export const environment = {};
+export const environment = {
+  production: false
+};
 
 export const exposedApi = {
 
