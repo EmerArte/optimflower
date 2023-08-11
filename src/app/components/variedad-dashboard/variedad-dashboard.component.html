@@ -1,0 +1,25 @@
+<app-filtros></app-filtros>
+<p-table [value]="semanas" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Semana/Color</th>
+      <th *ngFor="let item of datos">{{ item.color }}</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-semanas>
+      <tr>
+        <td>{{ semanas.name }}</td>
+        <td *ngFor="let val of semanas.values">
+          <div
+            [ngClass]="{
+              'outofstock' : val >= 100,
+              'lowstock' : val >= 120,
+              'instock' : val > 100 && val < 120
+            }"
+          >
+            {{ val }}
+          </div>
+        </td>
+      </tr>
+  </ng-template>
+</p-table>
