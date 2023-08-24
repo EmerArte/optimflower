@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./color-dashboard.component.scss']
 })
 export class ColorDashboardComponent {
-
+  filtrosVisibles = {
+    finca: true,
+    weekInicial: true,
+    weekFinal: true,
+    per: false,
+    color: true
+  }
 }

@@ -1,26 +1,57 @@
 <p-card>
-  <div class="w-full">
-    <form [formGroup]="formFilters">
-      <div class="flex flex-wrap gap-3 p-fluid">
-        <div class="flex-auto">
-          <label for="semanaInicial">Semana Inicial</label>
-          <p-dropdown
-            formControlName="semanaInicial"
-            [options]="weeks"
-            optionLabel="display"
-            styleClass="m-1"
-          ></p-dropdown>
+  <ng-template pTemplate="content">
+    <div class="w-full m-0 p-0">
+      <h2 class="text-base m-0 mb-2 text-center">Filtros</h2>
+      <form [formGroup]="formFilters">
+        <div class="flex flex-wrap gap-3 p-fluid">
+          <div class="flex-auto" *ngIf="filtrosVisibles.finca">
+            <label for="finca" class="ml-1">Finca</label>
+            <p-dropdown
+              formControlName="finca"
+              [options]="finca"
+              optionLabel="nombre"
+              styleClass="m-1"
+            ></p-dropdown>
+          </div>
+          <div class="flex-auto" *ngIf="filtrosVisibles.weekInicial">
+            <label for="semanaInicial" class="ml-1">Semana Inicial</label>
+            <p-dropdown
+              formControlName="semanaInicial"
+              [options]="weeks"
+              optionLabel="display"
+              styleClass="m-1"
+            ></p-dropdown>
+          </div>
+          <div class="flex-auto" *ngIf="filtrosVisibles.weekFinal">
+            <label for="semanaFinal" class="ml-1">Semana Final</label>
+            <p-dropdown
+              formControlName="semanaFinal"
+              [options]="weeks"
+              optionLabel="display"
+              styleClass="m-1"
+            ></p-dropdown>
+          </div>
+          <div class="flex-auto" *ngIf="filtrosVisibles.color">
+            <label for="color" class="ml-1">Color</label>
+            <p-dropdown
+              formControlName="color"
+              [options]="color"
+              optionLabel="nombre"
+              styleClass="m-1"
+            ></p-dropdown>
+          </div>
+          <div class="flex-auto"  *ngIf="filtrosVisibles.per">
+            <label for="per" class="ml-1">Per</label>
+            <p-dropdown
+              formControlName="per"
+              [options]="per"
+              optionLabel="nombre"
+              styleClass="m-1"
+            ></p-dropdown>
+          </div>
         </div>
-        <div class="flex-auto">
-          <label for="semanaFinal">Semana Final</label>
-          <p-dropdown
-            formControlName="semanaFinal"
-            [options]="weeks"
-            optionLabel="display"
-            styleClass="m-1"
-          ></p-dropdown>
-        </div>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
+  </ng-template>
+  
 </p-card>
