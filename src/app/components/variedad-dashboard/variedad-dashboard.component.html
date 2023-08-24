@@ -1,8 +1,8 @@
 <app-filtros></app-filtros>
-<p-table [value]="semanas" [tableStyle]="{ 'min-width': '50rem' }">
+<p-table [value]="semanas" [tableStyle]="{ 'min-width': '50rem' }" [rows]="5" [paginator]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th>Semana/Color</th>
+      <th>Semana</th>
       <th *ngFor="let item of datos">{{ item.color }}</th>
     </tr>
   </ng-template>
@@ -16,6 +16,7 @@
               'bg-yellow-500' : val >= 120,
               '' : val > 100 && val < 120
             }"
+            class="text-center"
           >
             {{ val }}
           </div>

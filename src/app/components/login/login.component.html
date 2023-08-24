@@ -1,65 +1,79 @@
-<div class="grid m-0 p-0 w-full justify-content-center align-content-center align-items-center">
+<div
+  class="grid m-0 p-0 w-full justify-content-center align-content-center align-items-center"
+  style="background-image: url('assets/img/formacolor.png');"
+>
   <div class="md:col-8 lg:col-7 w-12 md:w-11 lg:w-10 m-0 p-0">
     <div
       class="grid m-0 p-0 min-h-screen align-items-center justify-content-center w-full"
     >
       <!-- mensajes estaticos -->
-      <div class="hidden sm:block sm:col-6 md:col-7 lg:col-8">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus illo
-        obcaecati tempore libero quis nostrum ab sint minima natus.
-        Necessitatibus vero voluptatibus iusto? Dignissimos repellendus
-        accusantium laboriosam iusto asperiores ipsa.
+      <div class="hidden md:block md:col-6 lg:col-7 xl:col-8">
+        <h1 class="font-bold xl:text-5xl tex-4xl lg:my-6 md:my-5 my-4">PREDICCION Y MONITOREO REMOTO DE PRODUCCIÓN DE MINICLAVELES</h1>
+        <ul class="list-disc font-bold">
+          <li  class="text-3xl my-1" >Prognosis por variedad y color</li>
+          <li class="text-3xl  my-1">Data analitycs & IA</li>
+          <li class="text-3xl  my-1">Modelamiento Multivariable con Machine Learning</li>
+        </ul>
       </div>
       <!-- Formulario -->
-      <div class="sm:col-6 md:col-5 lg:col-4 col-9">
-        <p-card>
-          <ng-template pTemplate="header">
-            <div class="w-full flex justify-content-center">
-              <img class="w-8rem h-8rem mt-2" src="assets/img/optimpowerlogo250.png" alt="logo">
-            </div>
-            <div class="flex flex-row w-full justify-content-center p-2">
-              <span class="text-xl text-blue-500">OPTIM</span>
-              <span class="text-xl text-yellow-500">FLOWER</span>
-            </div>
-          </ng-template>
+      <div class="md:col-6 lg:col-5 xl:col-4 col-10">
+        <div
+          class="grid m-0 p-0 justify-content-center align-items-center w-full"
+        >
+          <div class="m-0 p-0 col-12 xl:col-10">
+            <p-card styleClass="py-4">
+              <ng-template pTemplate="header">
+                <div class="w-full flex justify-content-center">
+                  <img
+                    class="w-8rem h-8rem mt-4"
+                    src="assets/img/optimpowerlogo250.png"
+                    alt="logo"
+                  />
+                </div>
+                <div class="flex flex-row w-full justify-content-center p-2">
+                  <span class="text-xl text-blue-500">OPTIM</span>
+                  <span class="text-xl text-yellow-500">FLOWER</span>
+                </div>
+              </ng-template>
 
-          <ng-template pTemplate="content">
-            <div>
-              
-              <form [formGroup]="formLogin">
-                <label for="username" class="font-bold block mb-2"
-                  >Usuario</label
-                >
-                <input
-                  pInputText
-                  id="integer"
-                  [pKeyFilter]="blockSpace"
-                  class="w-full"
-                  formControlName="username"
-                />
-                <label for="password" class="font-bold block mb-2"
-                  >Contraseña</label
-                >
-                <p-password
-                  formControlName="password"
+              <ng-template pTemplate="content">
+                <div>
+                  <form [formGroup]="formLogin">
+                    <label for="username" class="font-bold block mb-2"
+                      >Usuario</label
+                    >
+                    <input
+                      pInputText
+                      id="integer"
+                      [pKeyFilter]="blockSpace"
+                      class="w-full"
+                      formControlName="username"
+                    />
+                    <label for="password" class="font-bold block mb-2"
+                      >Contraseña</label
+                    >
+                    <p-password
+                      formControlName="password"
+                      styleClass="w-full"
+                      inputStyleClass="w-full"
+                      [toggleMask]="true"
+                      [feedback]="false"
+                    ></p-password>
+                  </form>
+                </div>
+              </ng-template>
+
+              <ng-template pTemplate="footer">
+                <p-button
+                  label="Iniciar Sessión"
                   styleClass="w-full"
-                  inputStyleClass="w-full"
-                  [toggleMask]="true"
-                  [feedback]="false"
-                ></p-password>
-              </form>
-            </div>
-          </ng-template>
-
-          <ng-template pTemplate="footer">
-            <p-button
-              label="Iniciar Sessión"
-              styleClass="w-full"
-              (onClick)="openDashboard('dashboard')"
-            ></p-button>
-          </ng-template>
-          <p-toast></p-toast>
-        </p-card>
+                  (onClick)="openDashboard('dashboard')"
+                ></p-button>
+              </ng-template>
+              <p-toast></p-toast>
+            </p-card>
+          </div>
+        </div>
       </div>
     </div>
   </div>
