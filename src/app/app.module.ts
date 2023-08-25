@@ -21,6 +21,7 @@ import { ColorDashboardComponent } from './components/color-dashboard/color-dash
 import { FiltrosComponent } from './components/filtros/filtros.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
+import { ChartModule } from 'primeng/chart';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { TableModule } from 'primeng/table';
     KeyFilterModule,
     InputTextModule,
     CardModule,
+    ChartModule,
     ToastModule,
     MessagesModule,
     ProgressSpinnerModule

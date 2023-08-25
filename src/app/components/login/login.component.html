@@ -20,8 +20,8 @@
         <div
           class="grid m-0 p-0 justify-content-center align-items-center w-full"
         >
-          <div class="m-0 p-0 col-12 xl:col-10">
-            <p-card styleClass="py-4">
+          <div class="m-0 p-0 col-12 xl:col-11">
+            <p-card styleClass="card-login">
               <ng-template pTemplate="header">
                 <div class="w-full flex justify-content-center">
                   <img
@@ -37,7 +37,7 @@
               </ng-template>
 
               <ng-template pTemplate="content">
-                <div>
+                <div (keydown.enter)="openDashboard('dashboard')">
                   <form [formGroup]="formLogin">
                     <label for="username" class="font-bold block mb-2"
                       >Usuario</label
