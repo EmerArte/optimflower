@@ -1,4 +1,55 @@
-<div class="grid m-0 p-0 surface-ground">
-    <app-filtros class="col-12 p-0 m-0" [filtros]="filtrosVisibles"></app-filtros>
+<div class="grid emulated-flex-gap surface-ground">
+  <app-filtros class="col-12" [filtros]="filtrosVisibles"></app-filtros>
+  <div class="col-12">
+    <div class="card">
+      <p-table
+        [value]="semanas"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [rows]="5"
+        [paginator]="true"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Semana</th>
+            <th *ngFor="let item of datos">{{ item.color }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-semanas>
+          <tr>
+            <td>{{ semanas.name }}</td>
+            <td *ngFor="let val of semanas.values">
+              <div
+                [ngClass]="{
+                  'bg-red-500': val <= 100,
+                  'bg-yellow-500': val >= 120,
+                  '': val > 100 && val < 120
+                }"
+                class="text-center"
+              >
+                {{ val }}
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <div class="col-12 lg:col-9">
+    <div class="card border-none">
+      <p-chart
+        type="line"
+        [data]="prediccion"
+        [options]="prediccionOpts"
+      ></p-chart>
+    </div>
+  </div>
+  <div class="col-4 lg:col-3">
+    <div class="card border-none">
+      <p-chart
+        type="doughnut"
+        [data]="produccionPie"
+        [options]="produccionPieOps"
+      ></p-chart>
+    </div>
+  </div>
 </div>
-
