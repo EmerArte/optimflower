@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Week } from '../base/models/week.model';
 import { WeekProduction } from '../base/models/weekproduction.model';
-import { data } from '../base/utilities/per1';
+import { data } from '../base/utilities/per2';
 
 @Component({
   selector: 'app-color-dashboard',
@@ -35,7 +35,7 @@ export class ColorDashboardComponent implements OnInit{
     data.forEach((element) => {
       let week: Week | any = {};
       week.color = element.name;
-      let titulo = 18;
+      let titulo = 36;
       const weekProdArray: WeekProduction[] = [];
       element.produccion.forEach((res: number) => {
         let weekProd: WeekProduction = {
