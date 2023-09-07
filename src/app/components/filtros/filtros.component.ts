@@ -38,6 +38,7 @@ export class FiltrosComponent implements OnInit {
       index = value;
       return { value: value, display: 'Semana ' + value };
     });
+    this.weeks = [this.weeks[34]];
     this.finca = [
       {
         nombre: 'finca 1',
