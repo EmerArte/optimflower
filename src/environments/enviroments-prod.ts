@@ -5,5 +5,5 @@ export const environment = {
 export const exposedApi = {
 
   API: 'api',
-
+  API_FLOWER: 'api_flower'
 };

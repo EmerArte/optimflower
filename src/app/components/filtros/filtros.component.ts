@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { FilterService } from 'src/app/services/filter.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 interface WeekDto {
   value: number;
@@ -22,53 +25,21 @@ export class FiltrosComponent implements OnInit {
   }
 
 
-  weeks: WeekDto[] | undefined;
-  finca: any[] | undefined;
+  weeks!: any[];
+  finca!: any[];
   per: any[] | undefined;
   color: any[] | undefined;
-  selectedWeek: number | undefined;
+  selectedWeek: string | undefined;
   formFilters: any;
-  constructor(private router: Router, private formBuilder: FormBuilder) {
+  lastChangeFilterValue: any;
+
+
+  constructor(private formBuilder: FormBuilder, private filterService: FilterService, private loadingService: LoadingService) {
     this.construirFormulario();
   }
 
   ngOnInit(): void {
-    this.weeks = Array.from({ length: this.getWeek() }, (_, index) => {
-      const value = index + 1;
-      index = value;
-      return { value: value, display: 'Semana ' + value };
-    });
-    this.weeks = [this.weeks[34]];
-    this.finca = [
-      {
-        nombre: 'finca 1',
-        id: 1,
-      },
-      {
-        nombre: 'finca 2',
-        id: 2,
-      },
-    ];
-    this.color = [
-      {
-        nombre: 'color 1',
-        id: 1,
-      },
-      {
-        nombre: 'color 2',
-        id: 2,
-      },
-    ];
-    this.per = [
-      {
-        nombre: 'per 1',
-        id: 1,
-      },
-      {
-        nombre: 'per 2',
-        id: 2,
-      },
-    ];
+    this.getFiltersData();
   }
 
   construirFormulario() {
@@ -81,22 +52,48 @@ export class FiltrosComponent implements OnInit {
     });
   }
 
-  getWeek() {
-    var date = new Date();
-    date.setHours(0, 0, 0, 0);
-    // Thursday in current week decides the year.
-    date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
-    // January 4 is always in week 1.
-    var week1 = new Date(date.getFullYear(), 0, 4);
-    // Adjust to Thursday in week 1 and count number of weeks from date to week1.
-    return (
-      1 +
-      Math.round(
-        ((date.getTime() - week1.getTime()) / 86400000 -
-          3 +
-          ((week1.getDay() + 6) % 7)) /
-          7
-      )
-    );
+  getFiltersData(){
+    const color$ = this.filterService.getColors();
+    const weeks$ = this.filterService.getDates();
+    this.loadingService.setLoading(true);
+    forkJoin([color$, weeks$]).subscribe(
+      {
+        next:(data:any[]) =>{
+          this.color = data[0];
+          this.weeks = data[1];
+          this.finca = [
+            {
+              nombre: "Finca 1"
+            }
+          ];
+          this.per = [
+            {
+              nombre: "Per 1"
+            }
+          ];
+          this.loadingService.setLoading(false);
+          this.detectChangeInFilters();
+        },
+        error:(err: any) =>{
+          console.log(err)
+          this.loadingService.setLoading(false);
+
+        }
+      }
+    )
+  }
+  detectChangeInFilters(){
+    this.formFilters.valueChanges.subscribe((e:any) => {
+      if(JSON.stringify(this.lastChangeFilterValue) != JSON.stringify(e)){
+        this.lastChangeFilterValue = e;
+        if(e.finca != null && e.finca!= null  && e.color!= null 
+           && e.color != null && e.per!= null  && e.per != null
+           && e.semanaInicial != null  && e.semanaInicial != null
+           && e.semanaFinal != null  && e.semanaFinal != null){
+          this.filterService.setDataWell(e)
+        }
+      }
+      
+    });
   }
 }

@@ -1,7 +1,7 @@
 {
     "rewrites": [
-      { "source": "/api/:match*", "destination": "https://optimback.azurewebsites.net/:match*" }
-  
+      { "source": "/api/:match*", "destination": "https://optimback.azurewebsites.net/:match*" },
+      { "source": "/api_flower/:match*", "destination": "https://optimflowerback.azurewebsites.net/:match*" }
     ],
     "headers": [
       {

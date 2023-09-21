@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { LoadingService } from './services/loading.service';
 @Component({
