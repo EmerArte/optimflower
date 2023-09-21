@@ -5,6 +5,6 @@ export const environment = {
 export const exposedApi = {
 
   API: 'https://optimback.azurewebsites.net',
-
+  API_FLOWER: 'https://optimflowerback.azurewebsites.net'
 };
 
