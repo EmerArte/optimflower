@@ -5,6 +5,7 @@ import { data } from '../base/utilities/per2';
 import { FilterService } from 'src/app/services/filter.service';
 import { Observable, Subscription } from 'rxjs';
 import { ColorService } from 'src/app/services/color.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-color-dashboard',
@@ -32,7 +33,8 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private filterService: FilterService,
-    private colorService: ColorService
+    private colorService: ColorService,
+    private loadingService: LoadingService
   ) {}
   ngOnDestroy(): void {
     this.filterSubscription?.unsubscribe();
@@ -44,6 +46,7 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
     this.filterSubscription = this.filterService.getData.subscribe({
       next: (filterData: any) => {
         if (filterData) {
+          this.loadingService.setLoading(true);
           this.loadTableData(filterData.semanaInicial);
         }
       },
@@ -147,6 +150,7 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
   loadTableData(dateInicial: string) {
     this.colorService.getTableData(dateInicial).subscribe({
       next: (dataTable: any) => {
+        this.loadingService.setLoading(false);
         this.transformDataTable(dataTable);
       },
       error: (err) => {
@@ -156,6 +160,8 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
   }
   transformDataTable(array: any[]) {
     const colores: any[] = [];
+    this.datos.length = 0;
+    this.semanas.length = 0;
     array.forEach((objeto) => {
       if (colores.indexOf(objeto.COLOR) == -1) {
         colores.push(objeto.COLOR);
