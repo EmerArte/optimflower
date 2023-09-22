@@ -324,7 +324,7 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
       })
       .map((value: any) => {
         const year = (value.SEMANA_PROD + '').substring(0, 4);
-        const weekDate = (value.SEMANA_PROD + '').substring(3, 5);
+        const weekDate = (value.SEMANA_PROD + '').substring(4, 6);
         return year + '-' + weekDate;
       });
     const dataEficiencia = response
@@ -351,7 +351,7 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
       })
       .map((value: any) => {
         const year = (value.SEMANA_PROD + '').substring(0, 4);
-        const weekDate = (value.SEMANA_PROD + '').substring(3, 5);
+        const weekDate = (value.SEMANA_PROD + '').substring(4, 6);
         return year + '-' + weekDate;
       });
     const predictedProduction = response
