@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Week } from '../base/models/week.model';
 import { WeekProduction } from '../base/models/weekproduction.model';
-import { data } from '../base/utilities/per2';
 import { FilterService } from 'src/app/services/filter.service';
-import { Observable, Subscription } from 'rxjs';
 import { ColorService } from 'src/app/services/color.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { Observable, Subscription, forkJoin } from 'rxjs';
+import { UIChart } from 'primeng/chart';
 
 @Component({
   selector: 'app-color-dashboard',
@@ -16,8 +16,13 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
   datos: Week[] = [];
   semanas: any[] = [];
 
+  @ViewChild('chartPredictionLine') chartPredictionLine!: UIChart;
   prediccion: any;
   prediccionOpts: any;
+
+  @ViewChild('chartEficiencia') chartEficiencia!: UIChart;
+  eficiencia: any;
+  eficienciaOpts: any;
 
   produccionPie: any;
   produccionPieOps: any;
@@ -40,18 +45,31 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
     this.filterSubscription?.unsubscribe();
   }
   ngOnInit(): void {
+    this.eficienciaGrafica();
     this.prediccionGrafica();
     this.produccionPieGrafica();
 
     this.filterSubscription = this.filterService.getData.subscribe({
       next: (filterData: any) => {
+        this.loadingService.setLoading(true);
         if (filterData) {
-          this.loadingService.setLoading(true);
-          this.loadTableData(filterData.semanaInicial);
+          const color = (filterData.color as string).replace(' ', '%20');
+          if (color) {
+            const getTableData$ = this.colorService.getTableData(
+              filterData.semanaInicial
+            );
+            const getGraphData$ = this.colorService.getGraphData(color);
+            this.loadData(
+              getTableData$,
+              getGraphData$,
+              filterData.semanaInicial
+            );
+          }
         }
       },
     });
   }
+
   prediccionGrafica() {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
@@ -61,18 +79,18 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
     this.prediccion = {
-      labels: ['11', '12', '13', '14', '15', '16', '17', '18', '19'],
+      labels: [],
       datasets: [
         {
           label: 'Predición',
-          data: [58293, 46234, 45656, 66563, 24244, 12345, 45674, 24356, 58293],
+          data: [],
           fill: false,
           borderColor: documentStyle.getPropertyValue('--blue-500'),
           tension: 0.4,
         },
         {
           label: 'Real',
-          data: [43234, 36234, 25656, 60063, 20345, 14345, 45631, 31323, 32244],
+          data: [],
           fill: false,
           borderColor: documentStyle.getPropertyValue('--yellow-500'),
           tension: 0.4,
@@ -83,7 +101,15 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
     this.prediccionOpts = {
       maintainAspectRatio: false,
       aspectRatio: 0.6,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
       plugins: {
+        title: {
+          display: true,
+          text: 'Grafica de produccion estimada vs real',
+        },
         legend: {
           labels: {
             color: textColor,
@@ -112,6 +138,75 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
       },
     };
   }
+  eficienciaGrafica() {
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColorSecondary = documentStyle.getPropertyValue(
+      '--text-color-secondary'
+    );
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+    this.eficiencia = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Predición',
+          data: [],
+          fill: false,
+          borderColor: documentStyle.getPropertyValue('--blue-500'),
+          tension: 0.4,
+        },
+        {
+          label: 'Real',
+          data: [],
+          fill: false,
+          borderColor: documentStyle.getPropertyValue('--yellow-500'),
+          tension: 0.4,
+        },
+      ],
+    };
+
+    this.eficienciaOpts = {
+      maintainAspectRatio: false,
+      aspectRatio: 0.6,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Grafica de EFICIENCIA estimada vs real',
+        },
+        legend: {
+          labels: {
+            color: textColor,
+          },
+        },
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: textColorSecondary,
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false,
+          },
+        },
+        y: {
+          ticks: {
+            color: textColorSecondary,
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false,
+          },
+        },
+      },
+    };
+  }
+
   produccionPieGrafica() {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
@@ -147,17 +242,6 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
     };
   }
 
-  loadTableData(dateInicial: string) {
-    this.colorService.getTableData(dateInicial).subscribe({
-      next: (dataTable: any) => {
-        this.loadingService.setLoading(false);
-        this.transformDataTable(dataTable);
-      },
-      error: (err) => {
-        console.error(err);
-      },
-    });
-  }
   transformDataTable(array: any[]) {
     const colores: any[] = [];
     this.datos.length = 0;
@@ -186,7 +270,7 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
     });
     this.getSemanas();
   }
-    getSemanas() {
+  getSemanas() {
     const val = this.datos[0];
     val.week.forEach((week: WeekProduction) => {
       this.semanas.push({
@@ -195,7 +279,7 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
       });
     });
   }
-    getValues(nombreSemana: string) {
+  getValues(nombreSemana: string) {
     const valuesByWeek: number[] = [];
     this.datos.forEach((data: Week) => {
       data.week.forEach((value: WeekProduction) => {
@@ -214,5 +298,82 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
       .map((object: any) => {
         return object.PREDICCION;
       });
+  }
+
+  loadData(
+    getTableData$: Observable<any>,
+    getGraphData$: Observable<any>,
+    fechaInicial: string
+  ) {
+    forkJoin([getTableData$, getGraphData$]).subscribe({
+      next: (value: any[]) => {
+        const dataTable = value[0];
+        const graphData = value[1];
+        this.loadTableData(dataTable);
+        this.loadPrediccionData(graphData, fechaInicial);
+        this.loadEficienciaData(graphData, fechaInicial);
+        this.loadingService.setLoading(false);
+      },
+    });
+  }
+  loadEficienciaData(value: any, fechaInicial: string) {
+    const response: any[] = value as any[];
+    const weeksPrediction = response
+      .filter((value: any) => {
+        return value.SEMANA_PRED == fechaInicial;
+      })
+      .map((value: any) => {
+        const year = (value.SEMANA_PROD + '').substring(0, 4);
+        const weekDate = (value.SEMANA_PROD + '').substring(3, 5);
+        return year + '-' + weekDate;
+      });
+    const dataEficiencia = response
+      .filter((value: any) => {
+        return value.SEMANA_PRED == fechaInicial;
+      })
+      .map((value: any) => {
+        return value.EFICIENCIA;
+      });
+    const staticTope: any[] = [];
+    dataEficiencia.forEach(() => {
+      staticTope.push(115);
+    });
+    this.eficiencia.datasets[1].data = dataEficiencia;
+    this.eficiencia.datasets[0].data = staticTope;
+    this.eficiencia.labels = weeksPrediction;
+    this.chartEficiencia.reinit();
+  }
+  loadPrediccionData(value: any, fechaInicial: string) {
+    const response: any[] = value as any[];
+    const weeksPrediction = response
+      .filter((value: any) => {
+        return value.SEMANA_PRED == fechaInicial;
+      })
+      .map((value: any) => {
+        const year = (value.SEMANA_PROD + '').substring(0, 4);
+        const weekDate = (value.SEMANA_PROD + '').substring(3, 5);
+        return year + '-' + weekDate;
+      });
+    const predictedProduction = response
+      .filter((value: any) => {
+        return value.SEMANA_PRED == fechaInicial;
+      })
+      .map((value: any) => {
+        return value.PREDICCION as number;
+      });
+    const realProduction = response
+      .filter((value: any) => {
+        return value.SEMANA_PRED == fechaInicial;
+      })
+      .map((value: any) => {
+        return value.PRODUCCION as number;
+      });
+    this.prediccion.labels = weeksPrediction;
+    this.prediccion.datasets[0].data = predictedProduction;
+    this.prediccion.datasets[1].data = realProduction;
+    this.chartPredictionLine.reinit();
+  }
+  loadTableData(dataTable: any) {
+    this.transformDataTable(dataTable);
   }
 }

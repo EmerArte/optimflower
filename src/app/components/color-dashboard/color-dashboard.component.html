@@ -63,12 +63,23 @@
       </p-table>
     </div>
   </div>  lg:col-9-->
-  <div class="col-12">
+  <div class="xl:col-6 col-12">
     <div class="card border-none">
       <p-chart
+      #chartPredictionLine
         type="line"
         [data]="prediccion"
         [options]="prediccionOpts"
+      ></p-chart>
+    </div>
+  </div>
+  <div class="xl:col-6 col-12">
+    <div class="card border-none">
+      <p-chart
+      #chartEficiencia
+        type="line"
+        [data]="eficiencia"
+        [options]="eficienciaOpts"
       ></p-chart>
     </div>
   </div>
