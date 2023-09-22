@@ -12,4 +12,8 @@ export class ColorService {
     const url = exposedApi.API_FLOWER + "/api/getprediccioncolor/" + initDate;
     return this.httpClient.get(url);
   }
+  getGraphData(color: string){
+    const url = exposedApi.API_FLOWER + "/api/getclaveleficiencia/" + color;
+    return this.httpClient.get(url);
+  }
 }

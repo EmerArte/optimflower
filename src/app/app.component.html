@@ -1,7 +1,10 @@
 <div class="relative h-full w-full">
     <router-outlet></router-outlet>
-    <div *ngIf="isLoading()" class="absolute top-0 left-0 w-full min-h-screen z-1" style="backdrop-filter: blur(2px);">
-            <p-progressSpinner styleClass="absolute top-50 right-50 z-2 w-4rem h-4rem" strokeWidth="8" animationDuration=".5s"></p-progressSpinner>
+    <div *ngIf="isLoading()" class="absolute top-0 left-0 w-full h-full z-4" style="backdrop-filter: blur(2px);">
+        <div class="absolute top-0 h-screen text-center" style="left: 50%;">
+            <p-progressSpinner styleClass="relative top-45 z-5 w-4rem h-4rem" strokeWidth="8" animationDuration=".5s"></p-progressSpinner>
+        </div>
+            
     </div>
 </div>
 
