@@ -150,7 +150,7 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
       labels: [],
       datasets: [
         {
-          label: 'Predición',
+          label: 'Superior',
           data: [],
           fill: false,
           borderColor: documentStyle.getPropertyValue('--blue-500'),
@@ -161,6 +161,13 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
           data: [],
           fill: false,
           borderColor: documentStyle.getPropertyValue('--yellow-500'),
+          tension: 0.4,
+        },
+        {
+          label: 'Inferior',
+          data: [],
+          fill: false,
+          borderColor: documentStyle.getPropertyValue('--red-500'),
           tension: 0.4,
         },
       ],
@@ -202,6 +209,8 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
             color: surfaceBorder,
             drawBorder: false,
           },
+          suggestedMin: 0,
+          suggestedMax: 150
         },
       },
     };
@@ -335,11 +344,16 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
         return value.EFICIENCIA;
       });
     const staticTope: any[] = [];
+    const staticTopeMinor: any[] = [];
     dataEficiencia.forEach(() => {
       staticTope.push(115);
     });
+    dataEficiencia.forEach(() => {
+      staticTopeMinor.push(75);
+    });
     this.eficiencia.datasets[1].data = dataEficiencia;
     this.eficiencia.datasets[0].data = staticTope;
+    this.eficiencia.datasets[2].data = staticTopeMinor;
     this.eficiencia.labels = weeksPrediction;
     this.chartEficiencia.reinit();
   }
@@ -368,8 +382,10 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
       .map((value: any) => {
         return value.PRODUCCION as number;
       });
+      
     this.prediccion.labels = weeksPrediction;
     this.prediccion.datasets[0].data = predictedProduction;
+    this.prediccion.datasets[1].data = realProduction;
     this.prediccion.datasets[1].data = realProduction;
     this.chartPredictionLine.reinit();
   }
