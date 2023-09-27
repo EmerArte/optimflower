@@ -285,6 +285,9 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
       this.semanas.push({
         name: week.name,
         values: this.getValues(week.name),
+        total: this.getValues(week.name).reduce((accumulator, value) => {
+          return accumulator + value;
+        }, 0)
       });
     });
   }
@@ -299,6 +302,7 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
     });
     return valuesByWeek;
   }
+
   findProductionValues(semana: string, color: string, array: any[]) {
     return array
       .filter((val: any) => {
@@ -349,7 +353,7 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
       staticTope.push(115);
     });
     dataEficiencia.forEach(() => {
-      staticTopeMinor.push(75);
+      staticTopeMinor.push(95);
     });
     this.eficiencia.datasets[1].data = dataEficiencia;
     this.eficiencia.datasets[0].data = staticTope;

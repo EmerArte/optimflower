@@ -12,6 +12,7 @@
           <tr>
             <th>Semana</th>
             <th *ngFor="let item of datos">{{ item.color }}</th>
+            <th>Total</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-semanas>
@@ -24,6 +25,7 @@
                 {{ val }}
               </div>
             </td>
+            <td>{{ semanas.total }}</td>
           </tr>
         </ng-template>
       </p-table>
