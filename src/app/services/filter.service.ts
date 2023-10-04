@@ -19,6 +19,10 @@ export class FilterService {
     const url = exposedApi.API_FLOWER + '/api/getfiltroprediccion';
     return this.httpClient.get(url);
   }
+  getVariedad(){
+    const url = exposedApi.API_FLOWER + '/api/getproducciondataset';
+    return this.httpClient.get(url);
+  }
   setDataWell(data: any) {
     this.filterData.next(data);
   }

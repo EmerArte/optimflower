@@ -37,6 +37,15 @@
               styleClass="m-1"
             ></p-dropdown>
           </div>
+          <div class="flex-auto" [ngClass]=" filtrosVisibles.variedad ? '':  'hidden'">
+            <label for="variedad" class="ml-1">Variedad</label>
+            <p-dropdown
+              formControlName="variedad"
+              [options]="variedad"
+              optionLabel="VARIEDAD"
+              styleClass="m-1"
+            ></p-dropdown>
+          </div>
           <div class="flex-auto"  [ngClass]=" filtrosVisibles.per ? '':  'hidden'">
             <label for="per" class="ml-1">Per</label>
             <p-dropdown

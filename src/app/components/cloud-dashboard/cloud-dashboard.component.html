@@ -1,0 +1,14 @@
+<div class="grid emulated-flex-gap surface-ground">
+    <app-filtros class="col-12" [filtros]="filtrosVisibles"></app-filtros>
+    <div class="col-12">
+        <div class="card border-none">
+            <p-chart
+            #chartProduccion
+              type="scatter"
+              [data]="produccion"
+              [options]="produccionOpts"
+            ></p-chart>
+          </div>
+    </div>
+    <!-- <div class="col-12 xl:col-6"></div> -->
+</div>

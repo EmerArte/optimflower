@@ -22,6 +22,7 @@ import { FiltrosComponent } from './components/filtros/filtros.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { ChartModule } from 'primeng/chart';
+import { CloudDashboardComponent } from './components/cloud-dashboard/cloud-dashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +30,7 @@ import { ChartModule } from 'primeng/chart';
     VariedadDashboardComponent,
     ColorDashboardComponent,
     FiltrosComponent,
+    CloudDashboardComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { AuthGuardService } from './guard/auth-guard.service';
 import { AppLayoutComponent } from './layout/app.layout.component';
 import { VariedadDashboardComponent } from './components/variedad-dashboard/variedad-dashboard.component';
 import { ColorDashboardComponent } from './components/color-dashboard/color-dashboard.component';
+import { CloudDashboardComponent } from './components/cloud-dashboard/cloud-dashboard.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
       {
         path: 'color',
         component: ColorDashboardComponent,
+      },
+      {
+        path: 'cloud',
+        component: CloudDashboardComponent
       }
     ]
   }

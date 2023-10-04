@@ -31,6 +31,7 @@ export class ColorDashboardComponent implements OnInit, OnDestroy {
     finca: true,
     weekInicial: true,
     weekFinal: true,
+    variedad: false,
     per: false,
     color: true,
   };

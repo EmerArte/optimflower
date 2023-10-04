@@ -19,7 +19,8 @@ export class FiltrosComponent implements OnInit {
   @Input('filtros') filtrosVisibles = {
     finca: true,
     weekInicial: true,
-    weekFinal: true,
+    weekFinal: false,
+    variedad: true,
     per: true,
     color: true
   }
@@ -27,6 +28,7 @@ export class FiltrosComponent implements OnInit {
 
   weeks!: any[];
   finca!: any[];
+  variedad!: any[];
   per: any[] | undefined;
   color: any[] | undefined;
   selectedWeek: string | undefined;
@@ -46,6 +48,7 @@ export class FiltrosComponent implements OnInit {
     this.formFilters = this.formBuilder.group({
       finca: [null, Validators.required],
       color: [null, Validators.required],
+      variedad: [null, Validators.required],
       per: [null, Validators.required],
       semanaInicial: [null, Validators.required],
       semanaFinal: [null, Validators.required],
@@ -55,12 +58,14 @@ export class FiltrosComponent implements OnInit {
   getFiltersData(){
     const color$ = this.filterService.getColors();
     const weeks$ = this.filterService.getDates();
+    const variedad$ = this.filterService.getVariedad();
     this.loadingService.setLoading(true);
-    forkJoin([color$, weeks$]).subscribe(
+    forkJoin([color$, weeks$, variedad$]).subscribe(
       {
         next:(data:any[]) =>{
           this.color = data[0];
           this.weeks = data[1];
+          this.variedad = data[2];
           this.finca = [
             {
               nombre: "Finca 1"
@@ -87,7 +92,8 @@ export class FiltrosComponent implements OnInit {
       if(JSON.stringify(this.lastChangeFilterValue) != JSON.stringify(e)){
         this.lastChangeFilterValue = e;
         if(e.finca != null && e.finca!= null  && e.color!= null 
-           && e.color != null && e.per!= null  && e.per != null
+           && e.color != null && e.variedad!= null 
+           && e.variedad != null && e.per!= null  && e.per != null
            && e.semanaInicial != null  && e.semanaInicial != null
            && e.semanaFinal != null  && e.semanaFinal != null){
           this.filterService.setDataWell(e)
